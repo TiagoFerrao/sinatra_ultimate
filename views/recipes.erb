@@ -1,0 +1,11 @@
+<ul>
+  <% @recipes.each_with_index do |recipe, index| %>
+    <li>
+      <%= "#{index + 1} - #{recipe.done ? "[x]" : "[ ]"} #{recipe.name} #{recipe.prep_time}\n" %>
+    </li>
+  <% end %>
+</ul>
+
+<a href="/new">
+  Create new recipe
+</a>

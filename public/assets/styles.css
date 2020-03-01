@@ -1,0 +1,303 @@
+body {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+table {
+  width: 100%;
+  border: lightblue solid 2px;
+  max-width: 1200px;
+}
+
+.create_account {
+  width: 200px;
+}
+
+.enclosing-blue-box {
+  padding: 4px;
+}
+
+#task_table {
+  margin-top: 0px;
+}
+
+#add_new_task {
+  max-width: 400px;
+}
+
+/* makes an enclosing box for navbar */
+.header_tab {
+  display: inline-block;
+  padding: 6px;
+}
+
+/* default text decoration of navbar box = no underline */
+.header_tab > a {
+  text-decoration: none;
+}
+
+/* change link color to blue on hover */
+.header_tab > a:hover {
+  color: blue;
+}
+
+/* default text decoration of navbar box for "tags" = no underline*/
+.cat_header_tab > a {
+  text-decoration: none;
+}
+
+/* box background grey & link colored on hover */
+.header_tab:hover {
+  background-color: #e7e7e7;
+}
+
+/* "tags" box link underlined on hover */
+.cat_header_tab:hover > a {
+  color: blue;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-left: -6px;
+    min-width: 160px;
+}
+
+#hidden_block_for_nudging {
+  display: block;
+  visibility: hidden;
+  color: black;
+  padding: 3px 16px;
+  text-decoration: none;
+}
+
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    background-color: #f9f9f9;
+    border-style: solid;
+    border-color: lightblue;
+    border-width: 0px 2px 0px 2px;
+}
+
+.dropdown-content a.bottom_cat {
+    border-style: solid;
+    border-color: lightblue;
+    border-width: 0px 2px 2px 2px;
+}
+
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #e7e7e7;
+  color: blue;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+.thead {
+  background-color: #fcffc1;
+}
+
+.task_table_tds {
+  padding: 7px 4px 3px 4px;
+}
+
+.checkbox {
+  height: 16px;
+  width: 16px;
+}
+
+.edit_button_wrapper {
+  float: left;
+  display:inline-block;
+}
+
+
+.description_wrapper {
+  overflow:hidden;
+  padding-left: 5px;
+}
+
+.task {
+  width: 45%;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.date_added {
+  width: 12%;
+}
+
+.date_due {
+  width: 12%;
+}
+
+.categories {
+  width: 22%;
+}
+
+.delete {
+  width: 4%;
+}
+
+.rightmost {
+  border-right: none;
+}
+
+.colored_row {
+  background-color: #d4f4f9;
+}
+
+td {
+  margin: 0px;
+  border: 0px;
+  padding: 2px;
+  font-size: 1em;
+}
+
+#bottommost {
+  border-bottom: 0px;
+}
+
+.new_task_label {
+  text-align: right;
+  width: 10%;
+}
+
+.editing {
+  color: red;
+}
+
+textarea {
+  width: 275px;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+.other_input_box {
+  width: 277px;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+input:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+textarea:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+button.main_table {
+     background:none!important;
+     border:none;
+     padding:0!important;
+     font: inherit;
+     cursor: pointer;
+     font-size: .85em;
+}
+
+button.main_table:hover {
+  color: red;
+}
+
+button.loginout {
+  font-size: 1em;
+  background:none!important;
+  border:none;
+  padding:0!important;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.loginout:hover {
+  color: blue;
+}
+
+.input-button {
+  font-size: 1.1em;
+  background-color: green;
+  color:white;
+  border: 1px grey solid;
+  border-radius: 4px;
+}
+
+.cancel-button {
+  background-color: grey;
+  text-decoration: none;
+  font-size: 0.98em;
+  padding: 1.2px 2px 2px 2px;
+}
+
+.user_message {
+  color: red;
+  display: inline;
+}
+
+/* div table css */
+.div_table {
+  display: block;
+  width: 100%;
+}
+
+.div_add_new_task {
+  max-width: 830px;
+}
+
+.container {
+  float: left;
+  height: 100px;
+  width: 400px;
+}
+
+.row {
+  display: table-row;
+}
+
+.cell {
+  display: table-cell;
+}
+
+.div_task_label {
+  text-align: right;
+  vertical-align: middle;
+  width: 50px;
+}
+
+.div_bottom_row {
+  display: block;
+  clear: both;
+}
+
+.delete_all_button {
+  margin-top: 10px;
+  font-size: 1.2em;
+  float: right;
+}
+
+.delete_all_button:hover {
+  color: red;
+}
+
+.deletion_message_style {
+  color: red;
+  font-size: 1.2em;
+  text-align: right;
+}

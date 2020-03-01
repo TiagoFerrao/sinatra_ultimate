@@ -1,4 +1,2 @@
-# frozen_string_literal: true
-
-require './hello'
+require './todo'
 run Sinatra::Application

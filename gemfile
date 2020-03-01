@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
+
+# Commented-out items should be uncommented out when running in Linux; they don't
+# work in (at least) some Windows configurations.
+
 gem 'ruby'
 gem 'sinatra'

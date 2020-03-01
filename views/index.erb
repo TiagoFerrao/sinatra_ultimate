@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="icon"
+        type="image/png"
+        href="/assets/images/favicon.ico">
+      <meta charset='utf-8' />
+      <link type="text/css" rel="stylesheet" href="/assets/styles.css"/>
+      <title>Simple To Do</title>
+  </head>
+  <body>
+
+    <% # Prepare variables for editing mode or erroneous input %>
+    <% if @editing_mode %>
+      <% # locate task to edit using @id_to_edit %>
+      <% task_to_edit = @tasks.find {|task| task.id == @id_to_edit } %>
+      <% description_to_edit = task_to_edit.description %>
+      <% description_to_edit = @overlong_description if @overlong_description %>
+      <% # due date might not exist %>
+      <% due_date_to_edit = task_to_edit.date_due.strftime('%F') unless task_to_edit.date_due == "" %>
+      <% categories_to_edit = task_to_edit.categories.keys.reject { |cat| cat == "deleted" || cat == "completed"}.join(", ") %>
+      <% categories_to_edit = @bad_categories if @bad_categories %>
+      <% box_title = '<span class="editing">Editing task!</span>' %>
+      <% submit_button_title = "Submit Edit" %>
+      <% new_task_action = "submit_edit/#{task_to_edit.id}" %>
+    <% else %>
+      <% description_to_edit = @overlong_description if @overlong_description %>
+      <% categories_to_edit = @bad_categories if @bad_categories %>
+      <% box_title = "Add new task!" %>
+      <% submit_button_title = "Save Task" %>
+      <% new_task_action = "newtask" %>
+    <% end %>
+
+    <h1>Simple To Do List</h1>
+
+      <%= erb :header %>
+
+      <!-- ADD NEW TASK BOX -->
+      <form method="post" action="/<%= new_task_action %>">
+        <table class="div_table div_add_new_task"><tr><td>
+          <!-- top container: new_task box title -->
+          <div class="row">
+            <span class="cell">
+              &nbsp;
+            </span>
+            <span class="cell" style="align:left;">
+              <%= box_title %>
+            </span>
+          </div>
+          <!-- left container: task description -->
+          <div class="container">
+            <span class="cell div_task_label">
+              <label for="description">Describe task:</label>
+            </span>
+            <span class="cell" width="45%">
+              <textarea rows="4" cols="50" name="description" placeholder="What do you have to do?"
+              id="description" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }" autofocus="autofocus"><%= description_to_edit if description_to_edit %></textarea>
+            </span>
+          </div>
+          <!-- right container: date due and categories; should wrap on phones -->
+          <div class="container">
+            <!-- due date row (top) -->
+            <div class="row">
+              <span class="cell div_task_label">
+                <label for="date_due">Date due:</label>
+              </span>
+              <span class="cell div_task_label" width="45%">
+                <input type="text" name="date_due" placeholder="Optional: format mm/dd or yyyy/mm/dd" id="date_due" class="other_input_box" value="<%= due_date_to_edit %>">
+              </span>
+            </div>
+            <!-- categories row (bottom) -->
+            <div class="row">
+              <span class="cell div_task_label">
+                <label for="categories">Categories:</label>
+              </span>
+              <span class="cell div_task_label">
+                <textarea rows="2" cols="50" type="text" name="categories"
+                placeholder="Separate by commas: design, debugging" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }" id="categories"><%= categories_to_edit if categories_to_edit %></textarea>
+              </span>
+            </div>
+          </div>
+          <div class="div_bottom_row">
+            <span class="cell" style="float: right;">
+              <input type="submit" class="input-button" value="<%= submit_button_title %>">&nbsp;
+              <% if @editing_mode %>
+                <input type="hidden" name="date_added" value="<%= task_to_edit.date_added %>" />
+                <a class="input-button cancel-button" href="/">Cancel</a>
+              <% end %>
+              <div class="user_message">
+                <% if @user_message %>
+                  <%= @user_message %>
+                <% end %>
+              </div>
+            </span>
+          </div>
+        </td></tr></table>
+      </form>
+
+      <br />
+
+      <%= erb :task_table %>
+
+    </body>
+</html>

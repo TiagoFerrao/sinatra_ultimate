@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon"
+        type="image/png"
+        href="/assets/images/favicon.ico">
+    <meta charset='utf-8' />
+    <link type="text/css" rel="stylesheet" href="/assets/styles.css"/>
+    <title>Create an Account</title>
+  </head>
+  <p style="font-size:.75em;"><a href="/">&#8656; Home</a></p>
+  <h2>Simple To Do List</h2>
+  <h1>Create an Account</h1>
+  <body>
+    <table class="create_account"><tr><td><div class="enclosing-blue-box">
+      <form action="/submit_new_account" method="post">
+        <!-- EMAIL -->
+        <label for="email">Email:</label><br />
+          <input type="text" name="email" placeholder="Put email address here"
+            <% if @bad_email %>
+              value="<%= @bad_email %>"
+            <% end %>
+            id="email" autofocus="autofocus" onkeydown="if (event.keyCode == 13)
+            { this.form.submit(); return false; }" >
+          <% if @email_message %>
+            <div class="user_message"><%= @email_message %></div>
+          <% end %>
+        <!-- PASSWORD -->
+        <br /><br /><label for="password">Password:</label><br />
+          <input type="password" name="password" id="password" placeholder="Type password"
+            onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
+          <% if @pwd_message %>
+            <div class="user_message"><%= @pwd_message %></div>
+          <% end %>
+        <!-- PASSWORD AGAIN -->
+        <br /><br /><label for="password_again">Password again:</label><br />
+          <input type="password" name="password_again" placeholder="Type password again"
+            id="password_again" onkeydown="if (event.keyCode == 13) {
+            this.form.submit(); return false; }">
+          <% if @no_match_message %>
+            <div class="user_message"><%= @no_match_message %></div>
+          <% end %>
+        <br /><br />
+        <button type="submit" class="input-button">Create account</button>
+      </form>
+    </div></td></tr></table>
+  </body>
+</html>

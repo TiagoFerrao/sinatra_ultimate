@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <link type="text/css" rel="stylesheet" href="/assets/styles.css"/>
+    <title>Deleted items</title>
+  </head>
+  <body>
+    <h1>Deleted items</h1>
+    <%= erb :header %>
+    <%= erb :task_table %>
+    <% if @user_message %>
+      <p class="deletion_message_style"><%= @user_message %></p>
+    <% end %>
+    <form method="post" action="/delete_all">
+      <label for="delete_all_button"></label>
+        <input type="submit" name="delete_all_button" value="Clear All Permanently"
+          id="delete_all_button" title="Deletes all. Cannot be undone!"
+          class="delete_all_button" />
+    </form>
+    <p>You can undelete, or permanently delete, items from this page.</p>
+  </body>
+</html>

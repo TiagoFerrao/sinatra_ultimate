@@ -1,0 +1,104 @@
+
+<!-- This table lists all tasks in a certain category (or in the main view).
+Its functionality is identical across various categories, with a few changes. -->
+<table id="task_table">
+  <thead class="thead">
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th class="task">Task</th>
+    <th class="date_added">Date added</th>
+    <th class="date_due">Date due</th>
+    <th class="categories">Tags</th>
+    <th class="delete"></th>
+  </thead>
+  <tbody>
+    <% row_counter = 0 %>
+    <% @tasks.reverse.each do |task| %>
+      <% row_counter += 1 %>
+      <tr<%= " class='colored_row'" if row_counter.even? %>>
+
+        <!-- checkbox -->
+        <td class="task_table_tds"<%= " id='bottommost'" if row_counter == @tasks.length %>>
+          <!-- determine checkbox appearance based on whether item is completed -->
+          <% if task.categories["completed"] == true %>
+            <% hover_on_checkbox = "/assets/images/nxt-checkbox-unchecked-th.png" %>
+            <% hover_off_checkbox =     "/assets/images/nxt-checkbox-checked-ok-th.png" %>
+            <% checkbox_action = "/uncheck_completed/" %>
+          <% else %>
+            <% hover_on_checkbox = "/assets/images/nxt-checkbox-checked-ok-th.png" %>
+            <% hover_off_checkbox = "/assets/images/nxt-checkbox-unchecked-th.png" %>
+            <% checkbox_action = "/check_completed/" %>
+          <% end %>
+          <form method="post" action="<%= checkbox_action %><%= task.id %>">
+            <label for="task_checkbox"></label><input class="checkbox" type="image" name="task_checkbox" id="task_checkbox" src="<%= hover_off_checkbox %>"
+              onmouseover="this.src='<%= hover_on_checkbox %>';" onmouseout="this.src='<%= hover_off_checkbox %>';">
+              <input type="hidden" name="pg_type" value="<%= @pg_type %>">
+              <% if @pg_type == "category" %>
+                <input type="hidden" name="cat_page" value="<%= @cat_page %>">
+              <% end %>
+          </form>
+        </td>
+
+        <!-- edit button (in same cell as description) -->
+        <td class="task_table_tds"<%= " id='bottommost'" if row_counter == @tasks.length %>>
+          <div class="edit_button_wrapper">
+            <form method="post" action="/start_edit/<%= task.id %>">
+              <label for="edit_button"></label><input class="checkbox" type="image" id="edit_button" name="edit_button"  src="/assets/images/editing-icon.png">
+            </form>
+          </div>
+        </td>
+
+        <!-- description -->
+        <td class="task"<%= " id='bottommost'" if row_counter == @tasks.length %>>
+          <%= task.description %>
+        </td>
+
+        <!-- date added -->
+        <% added = task.date_added.strftime('%F') %>
+        <td<%= " id='bottommost'" if row_counter == @tasks.length %>><%= added %></td>
+
+        <!-- date due -->
+        <% due = task.date_due.strftime('%F') unless task.date_due == "" %>
+        <td<%= " id='bottommost'" if row_counter == @tasks.length %>><%= due if task.date_due != "" %></td>
+
+        <!-- categories -->
+        <td<%= " id='bottommost'" if row_counter == @tasks.length %>>
+          <% task.categories.each do |cat, value| %>
+            <% next if (cat == "completed" || cat == "deleted" || cat == nil) %>
+            <a href="/category/<%= cat %>"><%= cat.split(" ").map(&:capitalize).join(' ') %></a><% unless cat == task.categories.keys.last %>
+              <%= "|" %>
+            <% end %>
+          <% end %>
+        </td>
+
+        <!-- delete button -->
+        <td class="rightmost"<%= " id='bottommost'" if row_counter == @tasks.length %>>
+          <% unless @pg_type == "deleted" %>
+            <form method="post" action="/delete/<%= task.id %>">
+              <label for="delete_button"></label><input type="hidden" name="pg_type"
+                value="<%= @pg_type %>">
+              <% if @pg_type == "category" %>
+                <input type="hidden" name="cat_page" value="<%= @cat_page %>">
+              <% end %>
+              <button class="main_table" id="delete_button" type="submit"
+                name="delete">Delete</button>
+            </form>
+          <% else %>
+            <form method="post" action="/undelete/<%= task.id %>">
+              <label for="delete_button"></label><input type="hidden" name="pg_type"
+                value="<%= @pg_type.tr(" ", "%20") %>">
+              <button class="main_table" type="submit" id="delete_button"
+                name="delete">Undelete</button>
+            </form>
+            <form method="post" action="/perma_delete/<%= task.id %>">
+              <label for="delete_button"></label><input type="hidden"
+                name="pg_type" value="<%= @pg_type.tr(" ", "%20") %>">
+              <button class="main_table" type="submit" id="delete_button"
+                name="delete">Delete!!</button>
+            </form>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

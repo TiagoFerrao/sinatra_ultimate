@@ -1,0 +1,74 @@
+<!-- page header -->
+<div>
+  <% if @congrats_new_acct %>
+    <div class="user_message"><%= @congrats_new_acct %></div><br />
+  <% end %>
+  <% if @now_logged_in %>
+    <div class="user_message"><%= @now_logged_in %></div><br />
+  <% end %>
+  <span class="header_tab"><a href="/">Home</a></span>
+  <span class="header_tab"><a href="/completed">Completed</a></span>
+  <span class="header_tab"><a href="/deleted">Deleted</a></span>
+  <span class="header_tab">
+    <div class="dropdown">
+      <span class="cat_header_tab"><a href="">Tags</a></span>
+      <div class="dropdown-content">
+        <span id="hidden_block_for_nudging"></span>
+        <% cat_counter = 0 #%>
+        <% @display_categories.each do |cat| %>
+          <% cat_counter += 1 %>
+          <% if cat_counter == @display_categories.length %>
+            <a href="/category/<%= cat %>" class="bottom_cat"><%=
+              cat.split(" ").map(&:capitalize).join(' ') %>
+              <% if @all_tasks.count {|task| task.categories[cat] == true} > 1 %>
+                (<%= @all_tasks.count {|task| task.categories[cat] == true} %>)
+              <% end %>
+            </a>
+          <% else %>
+            <a href="/category/<%= cat %>"><%= cat.split(" ").map(&:capitalize).join(' ') %>
+            <% if @all_tasks.count {|task| task.categories[cat] == true} > 1 %>
+              (<%= @all_tasks.count {|task| task.categories[cat] == true} %>)
+            <% end %>
+            </a>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </span>
+
+  <!-- prepare login/out variables -->
+  <% if session[:email] %>         <!-- logged in -->
+    <% loginout_name = "logout" %>
+    <% loginout_text = "Logout" %>
+    <% loginout_path = "/logout" %>
+    <% loginout_method = "post" %>
+    <% username = session[:email].slice(0..(session[:email].index('@') - 1)) %>
+  <% else %>                          <!-- not logged in -->
+    <% loginout_name = "login" %>
+    <% loginout_text = "Login" %>
+    <% loginout_path = "/login" %>
+    <% loginout_method = "get" %>
+  <% end %>
+
+  <!-- WELCOME / CREATE ACCOUNT -->
+  <span class="header_tab">
+    <% if session[:email] %>      <!-- no action to take -->
+      <%= "Welcome, #{username}!" %>
+    <% else %>                       <!-- invite account creation -->
+      <form method="get" action="/create_account">
+        <input type="hidden" name="pg_type" value="<%= @pg_type %>">
+        <button class="loginout" type="submit"
+          name="create_account">Create Account!</button>
+      </form>
+    <% end %>
+  </span>
+  <!-- LOGIN / LOGOUT -->
+  <span class="header_tab">
+    <!-- Same form code generates login/logout button/action -->
+    <form method="<%= loginout_method %>" action="<%= loginout_path %>">
+      <input type="hidden" name="pg_type" value="<%= @pg_type %>">
+      <button class="loginout" type="submit"
+        name="<%= loginout_name %>"><%= loginout_text %></button>
+    </form>
+  </span>
+</div>
